@@ -8,7 +8,7 @@ class Schedule_Hours_Json extends Schedule_HoursAbstract
     /**
      * Load a JSON object of hours into the Hours class
      *
-     * @param $hours Path to the JSON file containing all of the hours opened
+     * @param string $hours Path to the JSON file containing all of the hours opened
      * and closed organized by day of the week
      */
     public function __construct($hours)
@@ -27,11 +27,11 @@ class Schedule_Hours_Json extends Schedule_HoursAbstract
         // open file and parse it
         $hours = file_get_contents($filename);
         $hours = json_decode($hours, true);
-
-        if ($hours) {
-            $this->hours = $hours;
+        if (!$hours) {
+            throw new Exception('Invalid JSON received.');
         }
 
+        $this->hours = $hours;
         parent::__construct($this->hours);
     }
 

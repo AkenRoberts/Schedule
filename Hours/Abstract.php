@@ -18,43 +18,56 @@ abstract class Schedule_HoursAbstract implements Schedule_HoursInterface
     protected $daysofweekArray = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 
     /**
-     * [__construct description]
+     * Receive an array of hours and do a thorough validation to make sure all
+     * of the hours are there and they all make sense. When possible, we will
+     * silently clean up the array.
+     *
+     * @TODO Cleanup/remove invalid days of the week? Currently they are ignored
+     *
+     * @TODO Create toArray method for dumping the entire hours array?
+     *
+     * @params array $hours
+     * @return void
      */
     public function __construct($hours)
     {
-        // if the day isn't given, assume closed
+        // force the array to be in the following format:
+        // array(
+        //     $dayofweek => array(
+        //         array(
+        //             'open'  => $time,
+        //             'close' => $time
+        //         )
+        //     )
+        // );
+        foreach ($hours as &$day) {
+            if (empty($day) || !is_array($day)) {
+                $day = array(array()); // closed
+            } elseif (array_key_exists('open', $day) || array_key_exists('close', $day)) {
+                $day = array($day);
+            }
+        }
+
+        // if a day isn't given, we assume closed
         foreach ($this->daysofweekArray as $dayofweek) {
             if (!isset($hours[$dayofweek]) || empty($hours[$dayofweek])) {
-                $hours[$dayofweek] = array(); // closed
+                $hours[$dayofweek] = array(array()); // closed
             }
         }
 
         // validate all open and close strings
-        foreach ($hours as &$day) {
-            if (array_key_exists('open', $day) || array_key_exists('close', $day)) {
-                foreach ($day as &$time) {
+        foreach ($hours as &$day_wrapper) {
+            foreach ($day_wrapper as &$days_hours) {
+                foreach ($days_hours as &$time) {
                     $time = $this->validateTime($time);
                 }
 
                 // if not both open and close, inject the other
-                if (array_key_exists('open', $day) === false || empty($day['open'])) {
-                    $day['open'] = '0:00';
-                } elseif (array_key_exists('close', $day) === false || empty($day['close'])) {
-                    $day['close'] = '23:59';
+                if (!array_key_exists('open', $days_hours) || empty($days_hours['open'])) {
+                    $days_hours['open'] = '0:00';
                 }
-            } else {
-            // this is a day that has multiple open and close times
-                foreach ($day as &$day2) {
-                    foreach ($day2 as &$time) {
-                        $time = $this->validateTime($time);
-                    }
-
-                    // if not both open and close, inject the other
-                    if (array_key_exists('open', $day2) === false || empty($day2['open'])) {
-                        $day2['open'] = '0:00';
-                    } elseif (array_key_exists('close', $day2) === false || empty($day2['close'])) {
-                        $day2['close'] = '23:59';
-                    }
+                if (!array_key_exists('close', $days_hours) || empty($days_hours['close'])) {
+                    $days_hours['close'] = '23:59';
                 }
             }
         }
@@ -87,6 +100,14 @@ abstract class Schedule_HoursAbstract implements Schedule_HoursInterface
         }
 
         return false;
+    }
+
+    /**
+     * Export the entire hours array
+     * @return array
+     */
+    public function toArray() {
+        return (array)$this->hours;
     }
 
     /**
