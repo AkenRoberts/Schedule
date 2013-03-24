@@ -21,13 +21,6 @@ class Schedule_Hours_Array extends Schedule_HoursAbstract
             throw new Exception('Invalid hours were given.');
         }
 
-        // if the day isn't given, assume closed
-        foreach ($this->daysofweekArray as $dayofweek) {
-            if (!isset($hours[$dayofweek]) || empty($hours[$dayofweek])) {
-                $hours[$dayofweek] = array(); // closed
-            }
-        }
-
         $this->hours = $hours;
 
         parent::__construct($this->hours);

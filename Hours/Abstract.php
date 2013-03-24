@@ -22,6 +22,13 @@ class Schedule_HoursAbstract implements Schedule_HoursInterface {
      */
     public function __construct($hours)
     {
+        // if the day isn't given, assume closed
+        foreach ($this->daysofweekArray as $dayofweek) {
+            if (!isset($hours[$dayofweek]) || empty($hours[$dayofweek])) {
+                $hours[$dayofweek] = array(); // closed
+            }
+        }
+
         // validate all open and close strings
         foreach ($hours as &$day) {
             if (array_key_exists('open', $day) || array_key_exists('close', $day)) {
@@ -89,7 +96,7 @@ class Schedule_HoursAbstract implements Schedule_HoursInterface {
         } elseif (stripos($time, 'pm') !== false) {
             $time = str_ireplace(array('pm', ' '), '', $time);
             list($h, $m) = explode(':', $time);
-            $h += 12; // add 12 hours
+            if ($h > 12) $h += 12; // add 12 hours if after 12pm
             $time = $h . ':' . $m;
         }
 
