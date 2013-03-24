@@ -2,8 +2,8 @@
 
 require_once 'Interface.php';
 
-class Schedule_HoursAbstract implements Schedule_HoursInterface {
-
+abstract class Schedule_HoursAbstract implements Schedule_HoursInterface
+{
 
     /**
      * Container for the hours
@@ -67,7 +67,7 @@ class Schedule_HoursAbstract implements Schedule_HoursInterface {
      * assumed.
      * @param  string $day='' Day of the week (title case)
      * @return array Array containing the open and close times for the given
-     * day. Returns null if closed all day.
+     * day. Returns false if closed all day.
      */
     public function getHours($day='')
     {
@@ -86,9 +86,16 @@ class Schedule_HoursAbstract implements Schedule_HoursInterface {
             return (array)$this->hours[$dayofweek];
         }
 
-        return null;
+        return false;
     }
 
+    /**
+     * Validates a given time string to be in the proper 24 hour clock notation.
+     * Currently this method returns a modified version of the string if it
+     * detects a problem with the formatting.
+     * @param  string $time
+     * @return string
+     */
     protected function validateTime($time) {
         // translate am/pm to 24 hour clock
         if (stripos($time, 'am') !== false) {
