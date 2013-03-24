@@ -22,38 +22,27 @@ abstract class Schedule_HolidaysAbstract implements Schedule_HolidaysInterface
         if (empty($holidayhours)) return;
 
         // validate
-        foreach ($holidayhours as &$date) {
-            // unlike the Hours class, if a date isn't given here, we don't assume
-            // that they are closed, however, if the date is **empty**, we do.
-            if (empty($date) && !is_array($date)) {
-                $date = array(); // closed
+        foreach ($holidayhours as &$date_wrapper) {
+            // If an empty date is given here, they are closed
+            if (empty($date_wrapper) || !is_array($date_wrapper)) {
+                $date_wrapper = array(array()); // closed
+            } elseif (!empty($date_wrapper) && (array_key_exists('open', $date_wrapper) || array_key_exists('close', $date_wrapper))) {
+                $date_wrapper = array($date_wrapper);
             }
+        }
 
-            // validate all open and close strings
-            if (array_key_exists('open', $date) || array_key_exists('close', $date)) {
-                foreach ($date as &$time) {
+        foreach ($holidayhours as &$date_wrapper) {
+            foreach ($date_wrapper as &$date_hours) {
+                foreach ($date_hours as &$time) {
                     $time = $this->validateTime($time);
                 }
 
                 // if not both open and close, inject the other
-                if (array_key_exists('open', $date) === false || empty($date['open'])) {
-                    $date['open'] = '0:00';
-                } elseif (array_key_exists('close', $date) === false || empty($date['close'])) {
-                    $date['close'] = '23:59';
+                if (!array_key_exists('open', $date_hours) || empty($date_hours['open'])) {
+                    $date_hours['open'] = '0:00';
                 }
-            } else {
-            // this is a day that has multiple open and close times
-                foreach ($date as &$date2) {
-                    foreach ($date2 as &$time) {
-                        $time = $this->validateTime($time);
-                    }
-
-                    // if not both open and close, inject the other
-                    if (array_key_exists('open', $date2) === false || empty($date2['open'])) {
-                        $date2['open'] = '0:00';
-                    } elseif (array_key_exists('close', $date2) === false || empty($date2['close'])) {
-                        $date2['close'] = '23:59';
-                    }
+                if (!array_key_exists('close', $date_hours) || empty($date_hours['close'])) {
+                    $date_hours['close'] = '23:59';
                 }
             }
         }
@@ -94,7 +83,15 @@ abstract class Schedule_HolidaysAbstract implements Schedule_HolidaysInterface
             return (array)$this->holidayhours[$holidaydate];
         }
 
-        return null;
+        return false;
+    }
+
+    /**
+     * Export the entire hours array
+     * @return array
+     */
+    public function toArray() {
+        return (array)$this->holidayhours;
     }
 
     /**

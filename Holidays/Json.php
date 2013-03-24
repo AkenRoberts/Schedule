@@ -26,10 +26,11 @@ class Schedule_Holidays_Json extends Schedule_HolidaysAbstract
         // open file and parse it
         $holidayhours = file_get_contents($filename);
         $holidayhours = json_decode($holidayhours, true);
-
-        if ($holidayhours) {
-            $this->holidayhours = $holidayhours;
+        if (!$holidayhours) {
+            throw new Exception('Invalid JSON received.');
         }
+
+        $this->holidayhours = $holidayhours;
 
         parent::__construct($this->holidayhours);
     }

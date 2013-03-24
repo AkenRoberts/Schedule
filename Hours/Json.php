@@ -32,6 +32,7 @@ class Schedule_Hours_Json extends Schedule_HoursAbstract
         }
 
         $this->hours = $hours;
+
         parent::__construct($this->hours);
     }
 

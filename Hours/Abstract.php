@@ -40,11 +40,11 @@ abstract class Schedule_HoursAbstract implements Schedule_HoursInterface
         //         )
         //     )
         // );
-        foreach ($hours as &$day) {
-            if (empty($day) || !is_array($day)) {
-                $day = array(array()); // closed
-            } elseif (array_key_exists('open', $day) || array_key_exists('close', $day)) {
-                $day = array($day);
+        foreach ($hours as &$day_wrapper) {
+            if (empty($day_wrapper) || !is_array($day_wrapper)) {
+                $day_wrapper = array(array()); // closed
+            } elseif (array_key_exists('open', $day_wrapper) || array_key_exists('close', $day_wrapper)) {
+                $day_wrapper = array($day_wrapper);
             }
         }
 
