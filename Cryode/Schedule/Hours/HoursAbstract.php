@@ -1,10 +1,7 @@
-<?php
+<?php namespace Cryode\Schedule\Hours;
 
-require_once 'Interface.php';
-
-abstract class Schedule_HoursAbstract implements Schedule_HoursInterface
+abstract class HoursAbstract implements HoursInterface
 {
-
     /**
      * Container for the hours
      *
@@ -90,7 +87,7 @@ abstract class Schedule_HoursAbstract implements Schedule_HoursInterface
             // given day isn't a normal day of the week, so try to parse it
             $dayofweek = date('l', strtotime($day));
             if ($dayofweek === false) {
-                throw new Exception('Invalid day specified.');
+                throw new \Exception('Invalid day specified.');
             }
         }
 

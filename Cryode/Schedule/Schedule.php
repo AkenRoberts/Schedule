@@ -1,4 +1,6 @@
-<?php
+<?php namespace Cryode\Schedule;
+
+use \DateTime;
 
 /**
  * Schedule!
@@ -21,10 +23,10 @@ class Schedule extends DateTime {
 	/**
 	 * Define the hours and holidays dependencies.
 	 *
-	 * @param Schedule_HoursInterface   $hours
-	 * @param Schedule_HolidayInterface $holidays
+	 * @param HoursInterface   $hours
+	 * @param HolidayInterface $holidays
 	 */
-	public function __construct(Schedule_HoursInterface $hours, Schedule_HolidayInterface $holidays)
+	public function __construct(HoursInterface $hours, HolidayInterface $holidays = null)
 	{
 		parent::__construct('Tuesday 11pm');
 
@@ -115,7 +117,7 @@ class Schedule extends DateTime {
 	{
 		if ( ! in_array($check, array('open', 'close')))
 		{
-			throw new InvalidArgumentException('Schedule::nextCheck() requires an "open" or "close" value.');
+			throw new InvalidArgument\Exception('Schedule::nextCheck() requires an "open" or "close" value.');
 		}
 
 		$day = new DateTime('now', $this->getTimezone());
@@ -166,12 +168,12 @@ class Schedule extends DateTime {
 			}
 
 			$day->setTime($this->format('H'), $this->format('i'));
-			$day->add(new DateInterval('P1D'));
+			$day->add(new \DateInterval('P1D'));
 		}
 
 		// If we got this far, there are no open dates
 		// within the specified range.
-		throw new Exception("There are no {$check} dates in the next {$iterations} days.");
+		throw new \Exception("There are no {$check} dates in the next {$iterations} days.");
 	}
 
 	/**
@@ -202,7 +204,7 @@ class Schedule extends DateTime {
 	public function setTimezone($timezone)
 	{
 		if ( ! $timezone instanceof DateTimeZone) {
-			$timezone = new DateTimeZone($timezone);
+			$timezone = new \DateTimeZone($timezone);
 		}
 
 		parent::setTimezone($timezone);

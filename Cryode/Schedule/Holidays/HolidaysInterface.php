@@ -1,7 +1,7 @@
-<?php
+<?php namespace Cryode\Schedule\Holidays;
 
-interface Schedule_HolidaysInterface {
-
+interface HolidaysInterface
+{
     /**
      * Load the holidays hours
      * @param mixed $holidayhours

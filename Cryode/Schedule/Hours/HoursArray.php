@@ -1,10 +1,7 @@
-<?php
+<?php namespace Cryode\Schedule\Hours;
 
-require_once 'Abstract.php';
-
-class Schedule_Hours_Array extends Schedule_HoursAbstract
+class HoursArray extends HoursAbstract
 {
-
     /**
      * Load an array of hours into the Hours class
      *
@@ -14,16 +11,15 @@ class Schedule_Hours_Array extends Schedule_HoursAbstract
     public function __construct($hours)
     {
         // validate
-        if (empty($hours)) {
-            throw new Exception('No hours were given.');
-        }
         if (!is_array($hours)) {
-            throw new Exception('Invalid hours were given.');
+            throw new \Exception('Invalid hours were given.');
+        }
+        if (empty($hours)) {
+            throw new \Exception('No hours were given.');
         }
 
         $this->hours = $hours;
 
         parent::__construct($this->hours);
     }
-
 }

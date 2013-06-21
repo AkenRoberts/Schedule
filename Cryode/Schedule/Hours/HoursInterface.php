@@ -1,7 +1,7 @@
-<?php
+<?php namespace Cryode\Schedule\Hours;
 
-interface Schedule_HoursInterface {
-
+interface HoursInterface
+{
     /**
      * Load the hours
      *
@@ -17,5 +17,4 @@ interface Schedule_HoursInterface {
      * @return array  Open and close hours for the given day
      */
     public function getHours($day='');
-
 }

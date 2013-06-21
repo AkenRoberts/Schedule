@@ -1,50 +1,36 @@
 <?php
 
-require_once 'Schedule.php';
+use Cryode\Schedule\Schedule;
+use Cryode\Schedule\Hours\HoursArray;
 
-class Schedule_HoursInterface {
+// Aken's dev server has errors turned off...
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-	public $hours = array(
-			'Sunday'	=> array(
-				'open'	=> '0:00',
-				'close'	=> '1:00',
-			),
-			'Monday'	=> array(
-				'open'	=> '8:00',
-				'close'	=> '20:00',
-			),
-			'Tuesday'	=> array(
-				array(
-					'open'	=> '8:00',
-					'close'	=> '12:00',
-				),
-				array(
-					'open'	=> '14:00',
-					'close'	=> '20:00',
-				),
-			),
-			'Wednesday'	=> false,
-			'Thursday'	=> false,
-			'Friday'	=> false,
-			'Saturday'	=> array(
-				'open'	=> '10:00',
-				'close'	=> '14:00',
-			),
-		);
+// PSR-0 autoload function
+spl_autoload_register(function($className) {
+    $className = ltrim($className, '\\');
+    $fileName  = '';
+    $namespace = '';
+    if ($lastNsPos = strrpos($className, '\\')) {
+        $namespace = substr($className, 0, $lastNsPos);
+        $className = substr($className, $lastNsPos + 1);
+        $fileName  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace) . DIRECTORY_SEPARATOR;
+    }
+    $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
-	public function getHours($day = null)
-	{
-		if ($day !== null AND array_key_exists($day, $this->hours))
-		{
-			return $this->hours[$day];
-		}
+    require $fileName;
+});
 
-		return $this->hours;
-	}
-}
+// ------------------------------------------------------------------------
 
-class Schedule_HolidayInterface {}
+$hours = new HoursArray(array(
+    'Sunday'    => array(
+        'open'  => '12:00',
+        'close' => '22:00',
+    ),
+));
 
-$schedule = new Schedule(new Schedule_HoursInterface, new Schedule_HolidayInterface);
+$schedule = new Schedule($hours);
 
-var_dump($schedule->nextOpen(), $schedule->nextClosed());
+exit(var_dump($schedule));

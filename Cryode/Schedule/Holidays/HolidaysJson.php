@@ -1,10 +1,7 @@
-<?php
+<?php namespace Cryode\Schedule\Holidays;
 
-require_once 'Abstract.php';
-
-class Schedule_Holidays_Json extends Schedule_HolidaysAbstract
+class HolidaysJson extends HolidaysAbstract
 {
-
     /**
      * Load a JSON object of hours into the Holidays class
      *
@@ -20,19 +17,18 @@ class Schedule_Holidays_Json extends Schedule_HolidaysAbstract
 
         // validate
         if (!file_exists($filename) || !is_readable($filename)) {
-            throw new Exception('File provided was not readable. Please check permissions.');
+            throw new \Exception('File provided was not readable. Please check permissions.');
         }
 
         // open file and parse it
         $holidayhours = file_get_contents($filename);
         $holidayhours = json_decode($holidayhours, true);
         if (!$holidayhours) {
-            throw new Exception('Invalid JSON received.');
+            throw new \Exception('Invalid JSON received.');
         }
 
         $this->holidayhours = $holidayhours;
 
         parent::__construct($this->holidayhours);
     }
-
 }

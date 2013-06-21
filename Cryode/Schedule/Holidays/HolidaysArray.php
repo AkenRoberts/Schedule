@@ -1,10 +1,7 @@
-<?php
+<?php namespace Cryode\Schedule\Holidays;
 
-require_once 'Abstract.php';
-
-class Schedule_Holidays_Array extends Schedule_HolidaysAbstract
+class HolidaysArray extends HolidaysAbstract
 {
-
     /**
      * Load an array of holiday hours into the Holidays class
      *
@@ -17,14 +14,14 @@ class Schedule_Holidays_Array extends Schedule_HolidaysAbstract
 
         // validate
         if (!is_array($holidayhours)) {
-            throw new Exception('Invalid holiday hours were given.');
+            throw new \Exception('Invalid holiday hours were given.');
         }
 
         foreach ($holidayhours as $key=>$date) {
             // ensure that $date is in the proper date format
             $formatted_date = date(self::DATE_FORMAT, strtotime($key));
             if ($formatted_date === false) {
-                throw new Exception('Invalid date format found.');
+                throw new \Exception('Invalid date format found.');
             }
             if ($formatted_date !== $key) {
                 $holidayhours[$formatted_date] = $date;
@@ -36,5 +33,4 @@ class Schedule_Holidays_Array extends Schedule_HolidaysAbstract
 
         parent::__construct($this->holidayhours);
     }
-
 }

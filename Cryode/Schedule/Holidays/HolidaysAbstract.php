@@ -1,10 +1,7 @@
-<?php
+<?php namespace Cryode\Schedule\Holidays;
 
-require_once 'Interface.php';
-
-abstract class Schedule_HolidaysAbstract implements Schedule_HolidaysInterface
+abstract class HolidaysAbstract implements HolidaysInterface
 {
-
     const DATE_FORMAT = 'Y-m-d';
 
     /**
@@ -17,7 +14,7 @@ abstract class Schedule_HolidaysAbstract implements Schedule_HolidaysInterface
     /**
      * [__construct description]
      */
-    public function __construct($holidayhours='')
+    public function __construct($holidayhours)
     {
         if (empty($holidayhours)) return;
 
@@ -74,7 +71,7 @@ abstract class Schedule_HolidaysAbstract implements Schedule_HolidaysInterface
         if (!empty($date)) {
             $holidaydate = date(self::DATE_FORMAT, strtotime($date));
             if ($holidaydate === false) {
-                throw new Exception('Invalid date specified.');
+                throw new \Exception('Invalid date specified.');
             }
         }
 
