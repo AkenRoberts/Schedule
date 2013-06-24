@@ -2,12 +2,15 @@
 
 class HolidaysArray extends HolidaysAbstract
 {
-    /**
-     * Load an array of holiday hours into the Holidays class
-     *
-     * @param array $holidayhours An array of hours opened and closed organized by day
-     * of the week
-     */
+    protected function format($holidayHours)
+    {
+        if ( ! is_array($holidayHours))
+        {
+            throw new \InvalidArgumentException('HolidaysArray expects an array of holiday data.');
+        }
+    }
+
+    /*
     public function __construct($holidayhours='')
     {
         if (empty($holidayhours)) return;
@@ -33,4 +36,5 @@ class HolidaysArray extends HolidaysAbstract
 
         parent::__construct($this->holidayhours);
     }
+    */
 }

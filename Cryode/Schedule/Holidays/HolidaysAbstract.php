@@ -5,21 +5,33 @@ abstract class HolidaysAbstract
     const DATE_FORMAT = 'Y-m-d';
 
     /**
-     * Container for the holidayhours
+     * Formatted holiday hours.
      *
-     * @var array
+     * @var  array
      */
-    protected $holidayhours = array();
+    protected $holidayHours = array();
 
     /**
-     * [__construct description]
+     * @param  mixed $holidayHours
+     * @return  void
      */
-    public function __construct($holidayhours)
+    public function __construct($holidayHours)
     {
-        if (empty($holidayhours)) return;
+        // No holiday hours passed? Nothing more to do.
+        if (empty($holidayHours))
+        {
+            return;
+        }
 
+        // Format the submitted data into a proper array.
+        $this->holidayHours = $this->format($holidayHours);
+
+        // Validate!
+        $this->validate($this->holidayHours);
+
+        /*
         // validate
-        foreach ($holidayhours as &$date_wrapper) {
+        foreach ($holidayHours as &$date_wrapper) {
             // If an empty date is given here, they are closed
             if (empty($date_wrapper) || !is_array($date_wrapper)) {
                 $date_wrapper = array(array()); // closed
@@ -28,7 +40,7 @@ abstract class HolidaysAbstract
             }
         }
 
-        foreach ($holidayhours as &$date_wrapper) {
+        foreach ($holidayHours as &$date_wrapper) {
             foreach ($date_wrapper as &$date_hours) {
                 foreach ($date_hours as &$time) {
                     $time = $this->validateTime($time);
@@ -43,8 +55,18 @@ abstract class HolidaysAbstract
                 }
             }
         }
+        */
+    }
 
-        $this->holidayhours = $holidayhours;
+    /**
+     * The method used to format the data into the proper array.
+     * Will vary for each implementor.
+     */
+    abstract protected function format($data);
+
+    protected function validate($data)
+    {
+        return false;
     }
 
     /**
@@ -53,8 +75,8 @@ abstract class HolidaysAbstract
      * @return boolean
      */
     public function hasHoliday($date='') {
-        $holidayhours = $this->getHolidayHours($date);
-        return (!is_null($holidayhours)) ? true : false;
+        $holidayHours = $this->getholidayHours($date);
+        return (!is_null($holidayHours)) ? true : false;
     }
 
     /**
@@ -64,7 +86,7 @@ abstract class HolidaysAbstract
      * @return array Array containing the open and close times for the given
      * day. Returns null if there are no holiday hours.
      */
-    public function getHolidayHours($date='')
+    public function getholidayHours($date='')
     {
         // find out what day we are looking for
         $holidaydate = date(self::DATE_FORMAT); // default to today
@@ -76,8 +98,8 @@ abstract class HolidaysAbstract
         }
 
         // lookup hours for the given day
-        if (!empty($this->holidayhours[$holidaydate])) {
-            return (array)$this->holidayhours[$holidaydate];
+        if (!empty($this->holidayHours[$holidaydate])) {
+            return (array)$this->holidayHours[$holidaydate];
         }
 
         return false;
@@ -88,7 +110,7 @@ abstract class HolidaysAbstract
      * @return array
      */
     public function toArray() {
-        return (array)$this->holidayhours;
+        return (array)$this->holidayHours;
     }
 
     /**
