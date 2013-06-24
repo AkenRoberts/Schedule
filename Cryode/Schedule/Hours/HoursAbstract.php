@@ -1,6 +1,6 @@
 <?php namespace Cryode\Schedule\Hours;
 
-abstract class HoursAbstract implements HoursInterface
+abstract class HoursAbstract
 {
     /**
      * Container for the hours

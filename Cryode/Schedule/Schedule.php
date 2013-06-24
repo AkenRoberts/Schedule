@@ -1,5 +1,7 @@
 <?php namespace Cryode\Schedule;
 
+use Cryode\Schedule\Hours\HoursAbstract;
+use Cryode\Schedule\Holidays\HolidaysAbstract;
 use \DateTime;
 
 /**
@@ -26,9 +28,9 @@ class Schedule extends DateTime {
 	 * @param HoursInterface   $hours
 	 * @param HolidayInterface $holidays
 	 */
-	public function __construct(HoursInterface $hours, HolidayInterface $holidays = null)
+	public function __construct(HoursAbstract $hours, HolidayAbstract $holidays = null)
 	{
-		parent::__construct('Tuesday 11pm');
+		parent::__construct();
 
 		$this->hours = $hours;
 		$this->holidays = $holidays;

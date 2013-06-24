@@ -1,6 +1,6 @@
 <?php namespace Cryode\Schedule\Holidays;
 
-abstract class HolidaysAbstract implements HolidaysInterface
+abstract class HolidaysAbstract
 {
     const DATE_FORMAT = 'Y-m-d';
 
