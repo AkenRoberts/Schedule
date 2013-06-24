@@ -1,25 +1,30 @@
 <?php namespace Cryode\Schedule\Hours;
 
+/**
+ * Array implementation for Hours.
+ */
 class HoursArray extends HoursAbstract
 {
     /**
-     * Load an array of hours into the Hours class
+     * Format raw hours content into appropriate array.
      *
-     * @param array $hours An array of hours opened and closed organized by day
-     * of the week
+     * @param  array $hours
+     * @return array
      */
-    public function __construct($hours)
+    protected function format($hours)
     {
-        // validate
-        if (!is_array($hours)) {
-            throw new \Exception('Invalid hours were given.');
+        // Ensure array format (duh).
+        if ( ! is_array($hours))
+        {
+            throw new \InvalidArgumentException('HoursArray expects an array of data.');
         }
-        if (empty($hours)) {
-            throw new \Exception('No hours were given.');
+        // No hours kind of defeats the purpose of this. *COULD* be optional
+        // to some people, though. Probably good practice to prevent empties, though.
+        else if (empty($hours))
+        {
+            throw new \Exception('The hours array must not be empty.');
         }
 
-        $this->hours = $hours;
-
-        parent::__construct($this->hours);
+        return $hours;
     }
 }
