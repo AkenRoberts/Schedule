@@ -2,7 +2,6 @@
 
 use Cryode\Schedule\Hours\HoursAbstract;
 use Cryode\Schedule\Holidays\HolidaysAbstract;
-use \DateTime;
 
 /**
  * Schedule!
@@ -10,7 +9,7 @@ use \DateTime;
  * @author  Eric "Aken" Roberts <eric@cryode.com>
  * @author  Brandon Kahre
  */
-class Schedule extends DateTime {
+class Schedule extends \DateTime {
 
 	/**
 	 * @var
@@ -25,8 +24,9 @@ class Schedule extends DateTime {
 	/**
 	 * Define the hours and holidays dependencies.
 	 *
-	 * @param HoursInterface   $hours
-	 * @param HolidayInterface $holidays
+	 * @param HoursAbstract   $hours
+	 * @param HolidayAbstract $holidays
+	 * @return void
 	 */
 	public function __construct(HoursAbstract $hours, HolidayAbstract $holidays = null)
 	{
@@ -119,7 +119,7 @@ class Schedule extends DateTime {
 	{
 		if ( ! in_array($check, array('open', 'close')))
 		{
-			throw new InvalidArgument\Exception('Schedule::nextCheck() requires an "open" or "close" value.');
+			throw new \InvalidArgumentException('Schedule::nextCheck() requires an "open" or "close" value.');
 		}
 
 		$day = new DateTime('now', $this->getTimezone());
