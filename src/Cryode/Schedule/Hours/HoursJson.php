@@ -1,4 +1,6 @@
-<?php namespace Cryode\Schedule\Hours;
+<?php
+
+namespace Cryode\Schedule\Hours;
 
 /**
  * JSON implementation for Hours.

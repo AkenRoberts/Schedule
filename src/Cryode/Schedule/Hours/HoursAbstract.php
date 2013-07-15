@@ -1,4 +1,6 @@
-<?php namespace Cryode\Schedule\Hours;
+<?php
+
+namespace Cryode\Schedule\Hours;
 
 /**
  * Abstract class for Hours implementors in different formats.

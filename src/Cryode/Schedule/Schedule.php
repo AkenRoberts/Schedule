@@ -1,7 +1,6 @@
-<?php namespace Cryode\Schedule;
+<?php
 
-use Cryode\Schedule\Hours\HoursAbstract;
-use Cryode\Schedule\Holidays\HolidaysAbstract;
+namespace Cryode\Schedule;
 
 /**
  * Schedule!
@@ -28,7 +27,7 @@ class Schedule extends \DateTime {
 	 * @param HolidayAbstract $holidays
 	 * @return void
 	 */
-	public function __construct(HoursAbstract $hours, HolidayAbstract $holidays = null)
+	public function __construct(Hours\HoursAbstract $hours, Hours\HolidayAbstract $holidays = null)
 	{
 		parent::__construct();
 
@@ -122,7 +121,7 @@ class Schedule extends \DateTime {
 			throw new \InvalidArgumentException('Schedule::nextCheck() requires an "open" or "close" value.');
 		}
 
-		$day = new DateTime('now', $this->getTimezone());
+		$day = new \DateTime('now', $this->getTimezone());
 
 		$iterations = 30;
 

@@ -1,4 +1,6 @@
-<?php namespace Cryode\Schedule\Holidays;
+<?php
+
+namespace Cryode\Schedule\Holidays;
 
 abstract class HolidaysAbstract
 {
