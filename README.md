@@ -1,7 +1,7 @@
 Schedule
 ========
 
-**Work in progress, please don't judge us.**
+**Work in progress, please don't use this class yet, or judge us for the incompleteness ;)**
 
 A set of PHP classes for maintaining hours of operation.
 
