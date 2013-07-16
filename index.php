@@ -1,18 +1,27 @@
 <?php
 
-namespace Cryode\Schedule;
+require_once __DIR__ . '/vendor/autoload.php';
 
-require_once 'vendor/autoload.php';
+use Cryode\Schedule\Hours\HoursArray;
+use Cryode\Schedule\Schedule;
+
+use Whoops\Handler\PrettyPageHandler;
+
+// Set up pretty errors.
+$run = new Whoops\Run;
+$handler = new PrettyPageHandler;
+
+$run->pushHandler($handler);
+
+$run->register();
 
 // ------------------------------------------------------------------------
 
-$hours = new Hours\HoursArray(array(
+$hours = new HoursArray(array(
     'Sunday'    => array(
         'open'  => '12:00',
         'close' => '22:00',
     ),
 ));
 
-$schedule = new Schedule($hours);
-
-exit(var_dump($schedule));
+$s = new Schedule($hours);
