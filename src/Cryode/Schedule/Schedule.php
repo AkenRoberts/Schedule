@@ -27,7 +27,7 @@ class Schedule extends \DateTime {
 	 * @param HolidayAbstract $holidays
 	 * @return void
 	 */
-	public function __construct(Hours\HoursAbstract $hours, Hours\HolidayAbstract $holidays = null)
+	public function __construct(Hours\HoursAbstract $hours, Holiday\HolidayAbstract $holidays = null)
 	{
 		parent::__construct();
 
@@ -204,7 +204,8 @@ class Schedule extends \DateTime {
 	 */
 	public function setTimezone($timezone)
 	{
-		if ( ! $timezone instanceof DateTimeZone) {
+		if ( ! $timezone instanceof DateTimeZone)
+		{
 			$timezone = new \DateTimeZone($timezone);
 		}
 
