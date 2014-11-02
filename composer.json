@@ -1,26 +1,23 @@
 {
-    "name": "cryode/schedule",
-    "description": "A PHP library for maintaining hours of operation.",
-    "authors": [
-        {
-            "name": "Eric Roberts",
-            "email": "eric@cryode.com"
-        },
-        {
-            "name": "Brandon Kahre",
-            "email": "brandonkahre@charter.net"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
-        "php": ">=5.3.0"
-    },
-    "require-dev": {
-        "filp/whoops": "1.*"
-    },
-    "autoload": {
-        "psr-0": {
-            "Cryode\\Schedule": "src/"
-        }
+  "name": "cryode/schedule",
+  "description": "A PHP library for maintaining hours of operation.",
+  "authors": [
+    {
+      "name": "Eric Roberts",
+      "email": "eric@cryode.com"
     }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "require-dev": {
+    "filp/whoops": "1.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Cryode\\Schedule\\": "src/"
+    }
+  },
+  "prefer-stable": true
 }
