@@ -32,4 +32,4 @@ $weekdayProvider = new ArrayProvider;
 
 $schedule = new Schedule($weekdayProvider->getWeek());
 
-dd($schedule->isOpen());
+dd($schedule->isOpen(), $schedule->getNextOpen());

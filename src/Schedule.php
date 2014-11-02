@@ -62,7 +62,11 @@ class Schedule
 
     public function getNextOpen()
     {
-        //
+        return $this->week->getNextOpenDay($this->now);
+
+        // @todo Generate a Weekday object but with a current date context,
+        //       so we can call items such as $weekday->getOpen(), and it will
+        //       return an actual DateTime object.
     }
 
     public function getNextClosed()
