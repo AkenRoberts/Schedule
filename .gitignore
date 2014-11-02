@@ -1,5 +1,7 @@
 .DS_Store
-
 composer.lock
-
 /vendor/
+
+# Personal notes file, doesn't need to be tracked.
+# @todo Remove when no longer part of project.
+notes.md
